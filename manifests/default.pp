@@ -36,6 +36,12 @@ exec { 'grant-replication-user':
 	# notify => Exec['install_percona-server-server-5.7'],
 }
 
+file { '/tmp/eric/foo':
+	ensure => directory,
+	owner => "vagrant",
+	group => "vagrant",
+	mode => 750,
+}
 
 package { 'vim':
 	require => Exec['apt-update'],
