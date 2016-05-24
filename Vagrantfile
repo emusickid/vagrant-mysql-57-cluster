@@ -3,30 +3,30 @@
 # vi: set ft=ruby :
 
 boxes = [
-    {
-        :name => "dc1-server1",
-        :eth1 => "192.168.205.10",
-        :mem => "1024",
-        :cpu => "1"
-    },
-    {
-        :name => "dc1-server2",
-        :eth1 => "192.168.205.11",
-        :mem => "512",
-        :cpu => "1"
-    },
-    {
-        :name => "dc1-server3",
-        :eth1 => "192.168.205.20",
-        :mem => "512",
-        :cpu => "1"
-    },
     # {
-    #     :name => "dc2-server1",
-    #     :eth1 => "192.168.205.21",
+    #     :name => "dc1-server1",
+    #     :eth1 => "192.168.205.10",
+    #     :mem => "1024",
+    #     :cpu => "1"
+    # },
+    # {
+    #     :name => "dc1-server2",
+    #     :eth1 => "192.168.205.11",
     #     :mem => "512",
     #     :cpu => "1"
     # },
+    # {
+    #     :name => "dc1-server3",
+    #     :eth1 => "192.168.205.20",
+    #     :mem => "512",
+    #     :cpu => "1"
+    # },
+    {
+        :name => "dc2-server1",
+        :eth1 => "192.168.205.21",
+        :mem => "512",
+        :cpu => "1"
+    },
     # {
     #     :name => "dc2-server2",
     #     :eth1 => "192.168.205.21",
@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
-    puppet.manifest_file = "default.pp"
+    puppet.manifest_file = "init.pp"
     puppet.options = '--verbose'
     puppet.module_path = 'modules'
   end
