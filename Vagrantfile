@@ -9,18 +9,18 @@ boxes = [
         :mem => "1024",
         :cpu => "1"
     },
-    # {
-    #     :name => "dc1-server2",
-    #     :eth1 => "192.168.205.11",
-    #     :mem => "512",
-    #     :cpu => "1"
-    # },
-    # {
-    #     :name => "dc1-server3",
-    #     :eth1 => "192.168.205.20",
-    #     :mem => "512",
-    #     :cpu => "1"
-    # },
+    {
+        :name => "dc1-server2",
+        :eth1 => "192.168.205.11",
+        :mem => "512",
+        :cpu => "1"
+    },
+    {
+        :name => "dc1-server3",
+        :eth1 => "192.168.205.20",
+        :mem => "512",
+        :cpu => "1"
+    },
     # {
     #     :name => "dc2-server1",
     #     :eth1 => "192.168.205.21",
@@ -46,6 +46,7 @@ Vagrant.configure(2) do |config|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "default.pp"
     puppet.options = '--verbose'
+    puppet.module_path = 'modules'
   end
 
   # Turn off shared folders

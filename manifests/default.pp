@@ -32,6 +32,7 @@ exec { 'create-replication-user':
 }
 #grant replication user
 exec { 'grant-replication-user':
+	require => Exec['create-replication-user'],
 	command      => '/usr/bin/mysql -e "GRANT REPLICATION SLAVE ON *.* TO \'replication\'@\'%\';"',
 	# notify => Exec['install_percona-server-server-5.7'],
 }
