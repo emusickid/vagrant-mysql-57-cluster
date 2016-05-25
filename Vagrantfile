@@ -3,33 +3,38 @@
 # vi: set ft=ruby :
 
 boxes = [
-    # {
-    #     :name => "dc1-server1",
-    #     :eth1 => "192.168.205.10",
-    #     :mem => "1024",
-    #     :cpu => "1"
-    # },
-    # {
-    #     :name => "dc1-server2",
-    #     :eth1 => "192.168.205.11",
-    #     :mem => "512",
-    #     :cpu => "1"
-    # },
-    # {
-    #     :name => "dc1-server3",
-    #     :eth1 => "192.168.205.20",
-    #     :mem => "512",
-    #     :cpu => "1"
-    # },
     {
-        :name => "dc2-server1",
-        :eth1 => "192.168.205.21",
+        :hostname => "dc1-master-1",
+        :name => "dc1-master-1",
+        :eth1 => "192.168.205.10",
+        :mem => "1024",
+        :cpu => "1"
+    },
+    {
+        :hostname => "dc1-master-2",   
+        :name => "dc1-master-2",
+        :eth1 => "192.168.205.11",
+        :mem => "512",
+        :cpu => "1"
+    },
+    {
+        :hostname => "dc1-slave-3",
+        :name => "dc1-slave-3",
+        :eth1 => "192.168.205.20",
         :mem => "512",
         :cpu => "1"
     },
     # {
-    #     :name => "dc2-server2",
+    #     :hostname => "dc1-master-1",
+    #     :name => "dc2-master-1",
     #     :eth1 => "192.168.205.21",
+    #     :mem => "512",
+    #     :cpu => "1"
+    # },
+    # {
+    #     :hostname => "dc1-master-2",      
+    #     :name => "dc2-master-2",
+    #     :eth1 => "192.168.205.22",
     #     :mem => "512",
     #     :cpu => "1"
     # }
@@ -53,6 +58,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
 
   boxes.each do |opts|
+    config.vm.hostname = opts[:hostname]
     config.vm.define opts[:name] do |config|
       #config.vm.hostname = opts[:name]
 

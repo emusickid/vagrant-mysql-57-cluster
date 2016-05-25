@@ -21,32 +21,63 @@ exec { 'apt-update':
   # notify => Exec['install_percona-server-server-5.7'],
 }
 
-class { 'mysql::server':
-  root_password   => 'password',
-  package_name    => 'percona-server-server-5.7',
-  override_options => {
+$servername = generate("/bin/hostname")
+$split = split($servername, '-')
+
+$serverid = $split[2]
+
+if 'master' in $servername {
+  $mysqlconfig = {
     'mysqld' => {
-      'server-id' => '1',
+      'bind-address' => '0.0.0.0',
+      'server-id' => $serverid,
       'log-slave-updates' => '1',
       'log-bin' => 'mysql-bin',
       'binlog_format' => 'MIXED',
       'enforce-gtid-consistency' => '',
       'gtid-mode'=> 'ON',
     }
-  }
+  } 
+}
+else {
+  $mysqlconfig = {
+    'mysqld' => {
+      'bind-address' => '0.0.0.0',
+      'server-id' => $serverid,
+      'log-bin' => 'mysql-bin',
+      'binlog_format' => 'MIXED',
+      'enforce-gtid-consistency' => '',
+      'gtid-mode'=> 'ON',
+      'relay-log' => 'relay-log-slave',
+      'read-only' => 'ON',
+    }
+  } 
+}
+
+
+
+notify{"The value is: ${servertype}": }
+
+class { 'mysql::server':
+  root_password   => 'password',
+  package_name    => 'percona-server-server-5.7',
+  override_options => $mysqlconfig,
 }
 
 mysql_user{ 'replication@%':
   ensure        => present,
-  password_hash => mysql_password('blah'),
+  password_hash => mysql_password('passw0rd'),
   notify        =>  Exec['grant-replication-user'],
 }
 #grant replication user
 exec { 'grant-replication-user':
   command      => '/usr/bin/mysql -e "GRANT REPLICATION SLAVE ON *.* TO \'replication\'@\'%\';"',
+  notify        =>  Exec['restart-mysql'],
 }
 
-
+exec { 'restart-mysql':
+  command      => '/etc/init.d/mysql restart',
+}
 
 package { 'vim':
   require => Exec['apt-update'],
