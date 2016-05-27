@@ -5,8 +5,12 @@ This vagrant environment will help in testing MySQL Master Master replication.
 
 ###The replication toplogy craeted in this environment is as follows:
   ```Master1 <====> Master2 ----> Slave1```.
-## To build the cluster
-``` /bin/bash bootstrap.sh```
+## Prepare the environmet and build cluster
+```
+$ git clone https://github.com/emusickid/vagrant-mysql-57-cluster.git
+$ cd vagrant-mysql-57-cluster
+$ /bin/bash bootstrap.sh
+```
 ## Connecting to the servers
 - ```vagrant ssh master-1```
 - ```vagrant ssh master-2```
