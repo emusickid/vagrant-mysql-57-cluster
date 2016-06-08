@@ -1,0 +1,9 @@
+#!/bin/bash
+READONLY=$(/usr/bin/mysql -Ne "SELECT @@READ_ONLY;" | awk {'print $1'});
+if [[ "$READONLY" == "0" ]]; then
+  echo "OK: Server is writable"
+  exit 0
+else
+  echo "Warning: Server is in read-only mode"
+  exit 2
+fi
