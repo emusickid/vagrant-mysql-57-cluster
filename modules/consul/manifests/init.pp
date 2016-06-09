@@ -30,4 +30,44 @@ class consul {
     require => File['/etc/consul.d/read_only_healthcheck.sh'],
     command => '/bin/echo \'{"check": {"name": "read_only", "script": "/bin/bash /etc/consul.d/read_only_healthcheck.sh", "interval": "5s"}}\' >/etc/consul.d/read_only.json'
   }
+
+  if 'consul-server' in $vmserver {
+    file{'/home/failover-master.sh':
+      ensure  => present,
+      content => template('failover-master.sh.erb'),
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+    } 
+    file{'/home/load-test':
+      ensure  => present,
+      content => template('load-test.erb'),
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+    }
+    file{'/home/start-consul-server':
+      ensure  => present,
+      content => template('start-consul-server.erb'),
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+    }
+    file{'/home/my-swap-master':
+      ensure  => present,
+      content => template('my-swap-master.erb'),
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+    }
+  }
+  else{
+    file{'/home/start-consul-agent':
+      ensure  => present,
+      content => template('start-consul-agent.erb'),
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+    }
+  }    
 }
