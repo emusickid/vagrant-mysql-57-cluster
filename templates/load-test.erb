@@ -4,4 +4,4 @@ while read line; do $(mysql -h db.service.consul -Dtest -ureplication -ppassw0rd
 duration=$SECONDS
 echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 
-echo "Load test complete!":q
+echo "Load test complete!"

@@ -2,6 +2,7 @@
 Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: "/usr/bin/wget -O /tmp/percona-mysql.deb https://repo.percona.com/apt/percona-release_0.1-3.$(lsb_release -sc)_all.deb >/dev/null 2>/dev/null;"
   config.vm.provision "shell", inline: "dpkg -i /tmp/percona-mysql.deb >/dev/null 2>/dev/null;"
+  config.vm.provision "shell", inline: "apt-key adv --keyserver keys.gnupg.net --recv-keys 8507EFA5 >/dev/null 2>/dev/null;"
   config.vm.provision "shell", inline: "apt-get update >/dev/null 2>/dev/null;"
   config.vm.provision "shell", inline: "/usr/bin/wget -O consul_0.6.4_linux_amd64.zip https://releases.hashicorp.com/consul/0.6.4/consul_0.6.4_linux_amd64.zip >/dev/null 2>/dev/null;"
   config.vm.box = "hashicorp/precise64"
