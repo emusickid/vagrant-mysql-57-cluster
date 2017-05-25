@@ -1,6 +1,6 @@
 
 exec { 'get_percona_pkg':
-  command => "/usr/bin/wget -O /tmp/percona-mysql.deb https://repo.percona.com/apt/percona-release_0.1-3.$(lsb_release -sc)_all.deb",
+  command => "/usr/bin/wget -O /tmp/percona-mysql.deb https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb",
   notify => Package['percona-mysql'],
 }
 
