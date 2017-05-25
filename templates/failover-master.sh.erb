@@ -1,0 +1,15 @@
+#!/bin/bash
+HOST=$1
+USER="replication"
+PASSWORD="passw0rd"
+
+READONLY=$(/usr/bin/mysql -h "$HOST" -u"$USER" -p"$PASSWORD" -Ne "SELECT @@READ_ONLY;" | awk {'print $1'});
+if [[ "$READONLY" == "0" ]]; then
+    echo "OK: Server is writable" 
+    $(mysql -h "$HOST" -u"$USER" -p"$PASSWORD" -e "set global read_only = 1;")
+    exit 0
+else
+    echo "Warning: Server is in read-only mode"
+    $(mysql -h "$HOST" -u"$USER" -p"$PASSWORD" -e "set global read_only = 0;")
+    exit 2
+fi

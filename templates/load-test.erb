@@ -1,0 +1,7 @@
+#!/bin/bash
+SECONDS=0
+while read line; do $(mysql -h db.service.consul -Dtest -ureplication -ppassw0rd -e "$line;"); done </tmp/load_data.sql  >/dev/null 2>/dev/null;
+duration=$SECONDS
+echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+
+echo "Load test complete!"
