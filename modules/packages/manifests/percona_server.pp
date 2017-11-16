@@ -7,7 +7,7 @@ class packages::percona_server {
         'server-id'                => $serverid,
         'log-slave-updates'        => '1',
         'log-bin'                  => 'mysql-bin',
-        'binlog_format'            => 'MIXED',
+        'binlog_format'            => 'ROW',
         'enforce-gtid-consistency' => '',
         'gtid-mode'                => 'ON',
         'early-plugin-load'        => 'keyring_file.so',
@@ -21,7 +21,7 @@ class packages::percona_server {
         'bind-address'             => '0.0.0.0',
         'server-id'                => $serverid,
         'log-bin'                  => 'mysql-bin',
-        'binlog_format'            => 'MIXED',
+        'binlog_format'            => 'ROW',
         'enforce-gtid-consistency' => '',
         'gtid-mode'                => 'ON',
         'relay-log'                => 'relay-log-slave',
@@ -44,8 +44,6 @@ class packages::percona_server {
     mode   => '750',
   }
   
-
-
   class { 'mysql::server':
     root_password    => 'password',
     package_name     => 'percona-server-server-5.7',
